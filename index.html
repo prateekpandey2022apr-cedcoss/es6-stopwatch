@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      body {
+        margin: 0 auto;
+      }
+      .container {
+        margin: 150px 0 0 0;
+        text-align: center;
+      }
+
+      #time {
+        font-size: 40px;
+      }
+
+      .btn-group {
+        margin: 5px 10px;
+      }
+
+      .btn-group button {
+        padding: 5px 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="time">1:00</div>
+      <div class="btn-group">
+        <button id="stop">Start</button>
+        <button id="reset">Reset</button>
+      </div>
+    </div>
+
+    <script>
+      let el = document.getElementById("time");
+      let interval_id;
+      let sw;
+
+      class StopWatch {
+        constructor() {
+          this.milliseconds = 0;
+          this.minutes = 0;
+          this.seconds = 0;
+          this.hours = 0;
+        }
+
+        resetMilliseconds() {
+          // debugger;
+          this.milliseconds = 0;
+          this.seconds = this.seconds + 1;
+        }
+
+        resetSeconds() {
+          this.seconds = 0;
+          this.minutes = this.minutes + 1;
+        }
+
+        resetMinutes() {
+          this.minutes = 0;
+          this.hours = this.hours + 1;
+        }
+
+        toString() {
+          // debugger;
+
+          let str = "";
+
+          str += `${this.hours.toString().padStart(2, "0")}:`;
+          str += `${this.minutes.toString().padStart(2, "0")}:`;
+          str += `${this.seconds.toString().padStart(2, "0")}:`;
+          str += `${this.milliseconds.toString().padStart(2, "0")}`;
+
+          return str;
+        }
+      }
+      // debugger;
+
+      console.log(sw);
+
+      function displayStopWatch(status) {
+        sw.milliseconds++;
+
+        if (sw.milliseconds > 100) {
+          sw.resetMilliseconds();
+        } else if (sw.seconds > 59) {
+          sw.resetSeconds();
+        } else if (sw.minutes > 59) {
+          sw.resetMinutes();
+        }
+
+        el.innerText = sw.toString();
+      }
+
+      sw = new StopWatch();
+
+      (function () {
+        // interval_id = setInterval(displayStopWatch, 10000);
+        el.innerText = sw.toString();
+      })();
+
+      // document.querySelector("#reset").addEventListener("click", function () {
+      //   interval_id = clearInterval(interval_id);
+      //   console.log("reset ..");
+      //   sw = undefined;
+      // });
+
+      document.querySelector("#stop").addEventListener("click", function () {
+        // debugger;
+        console.log("interval cleared");
+        debugger;
+        if (interval_id) {
+          interval_id = clearInterval(interval_id);
+          this.innerText = "Start";
+          sw = undefined;
+        } else {
+          this.innerText = "Stop";
+          sw = new StopWatch();
+          interval_id = setInterval(displayStopWatch, 10);
+        }
+      });
+
+      document.querySelector("#reset").addEventListener("click", function () {
+        // if (interval_id) {
+        interval_id = clearInterval(interval_id);
+        console.log("interval reseting ...");
+        sw = new StopWatch();
+        document.querySelector("#stop").innerText = "Start";
+        el.innerText = sw.toString();
+        // }
+      });
+
+      // stopWatch();
+    </script>
+  </body>
+</html>
