@@ -50,23 +50,23 @@
           this.hours = 0;
         }
 
-        resetMilliseconds() {
+        resetMilliseconds = () => {
           // debugger;
           this.milliseconds = 0;
           this.seconds = this.seconds + 1;
-        }
+        };
 
-        resetSeconds() {
+        resetSeconds = () => {
           this.seconds = 0;
           this.minutes = this.minutes + 1;
-        }
+        };
 
-        resetMinutes() {
+        resetMinutes = () => {
           this.minutes = 0;
           this.hours = this.hours + 1;
-        }
+        };
 
-        toString() {
+        toString = () => {
           // debugger;
 
           let str = "";
@@ -77,13 +77,13 @@
           str += `${this.milliseconds.toString().padStart(2, "0")}`;
 
           return str;
-        }
+        };
       }
       // debugger;
 
       console.log(sw);
 
-      function displayStopWatch(status) {
+      const displayStopWatch = () => {
         sw.milliseconds++;
 
         if (sw.milliseconds > 100) {
@@ -95,7 +95,7 @@
         }
 
         el.innerText = sw.toString();
-      }
+      };
 
       sw = new StopWatch();
 
@@ -115,12 +115,14 @@
         console.log("interval cleared");
         debugger;
         if (interval_id) {
+          // stop btn clicked
           interval_id = clearInterval(interval_id);
           this.innerText = "Start";
-          sw = undefined;
+          // sw = undefined;
         } else {
+          // start btn clicked
           this.innerText = "Stop";
-          sw = new StopWatch();
+          sw = sw ?? new StopWatch();
           interval_id = setInterval(displayStopWatch, 10);
         }
       });
